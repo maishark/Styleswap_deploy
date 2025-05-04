@@ -3,6 +3,7 @@ import { Mail } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+const API_BASE_URL = process.env.VITE_API_URL;
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -11,7 +12,7 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:1226/api/users/forgot-password', { email });
+      await axios.post('${API_BASE_URL}/api/users/forgot-password', { email });
       setIsSubmitted(true);
       toast.success('Password reset instructions sent to your email!');
     } catch (error) {

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+
 const ClosetSwap = () => {
   const { ownerId } = useParams();
   const location = useLocation();
@@ -26,7 +27,7 @@ const ClosetSwap = () => {
 
     const fetchWishlist = async () => {
       try {
-        const response = await axios.get(`http://localhost:1226/api/wishlist/${ownerId}`);
+        const response = await axios.get(`${API_BASE_URL}/api/wishlist/${ownerId}`);
         if (response.data?.wishlist?.items) {
           setWishlist(response.data.wishlist.items);
         } else {
@@ -54,7 +55,7 @@ const ClosetSwap = () => {
     }
 
     try {
-      await axios.post('http://localhost:1226/api/exchanges/request', {
+      await axios.post('${API_BASE_URL}/api/exchanges/request', {
         ownerId,
         offeredProductId: selectedProductId,
         requestedById: currentUser._id,

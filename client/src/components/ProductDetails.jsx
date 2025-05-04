@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import PacmanLoader from "react-spinners/PacmanLoader";
 import toast from "react-hot-toast";
 import ReviewSection from "./ReviewSection";
+const API_BASE_URL = process.env.VITE_API_URL;
 
 export function ProductDetails() {
   const { id } = useParams();
@@ -20,7 +21,7 @@ export function ProductDetails() {
       try {
         setIsLoading(true);
         const response = await axios.get(
-          `http://localhost:1226/api/products/view-product/${id}`
+          `${API_BASE_URL}/api/products/view-product/${id}`
         );
 
         if (response.data.success) {
@@ -38,7 +39,7 @@ export function ProductDetails() {
 
   const handleAddToCart = async () => {
     try {
-      await axios.post("http://localhost:1226/api/cart/add", {
+      await axios.post("${API_BASE_URL}/api/cart/add", {
         userId: user._id,
         productId: id,
         quantity: 1,
@@ -52,14 +53,14 @@ export function ProductDetails() {
   const handleToggleWishlist = async () => {
     try {
       if (!isWishlisted) {
-        await axios.post("http://localhost:1226/api/wishlist/add", {
+        await axios.post("${API_BASE_URL}/api/wishlist/add", {
           userId: user._id,
           productId: id,
         });
         setIsWishlisted(true);
         toast.success("Added to wishlist");
       } else {
-        await axios.post("http://localhost:1226/api/wishlist/remove", {
+        await axios.post("${API_BASE_URL}/api/wishlist/remove", {
           userId: user._id,
           productId: id,
         });

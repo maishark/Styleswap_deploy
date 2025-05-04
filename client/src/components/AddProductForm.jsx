@@ -15,45 +15,48 @@ export function AddProductForm() {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    try {
-      setIsLoading(true);
-      const token = localStorage.getItem("token"); // Get token from localStorage
-      console.log("Form Data being sent:", formData);
-      const response = await axios.post(
-        "http://localhost:1226/api/products/add-product",
-        {
-          ...formData,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, // Pass token here
-          },
-        }
-      );
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-      if (response.data.success) {
-        alert("Product added successfully!");
+  try {
+    setIsLoading(true);
+    const token = localStorage.getItem("token");
+    const apiBaseUrl = import.meta.env.VITE_API_URL; // ✅ Use env variable
+
+    console.log("Form Data being sent:", formData);
+    
+    const response = await axios.post(
+      `${apiBaseUrl}/api/products/add-product`, // ✅ No hardcoded localhost
+      {
+        ...formData,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
-    } catch (err) {
-      console.error("Error adding product:", err.response?.data?.message || err.message);
-      alert("Failed to add product. Please check your login session.");
-    } finally {
-      setIsLoading(false);
-      setFormData({
-        name: "",
-        size: "",
-        color: "",
-        gender: "",
-        condition: "",
-        image: "",
-        price: "",
-        duration: "",
-      });
+    );
+
+    if (response.data.success) {
+      alert("Product added successfully!");
     }
-  };
+  } catch (err) {
+    console.error("Error adding product:", err.response?.data?.message || err.message);
+    alert("Failed to add product. Please check your login session.");
+  } finally {
+    setIsLoading(false);
+    setFormData({
+      name: "",
+      size: "",
+      color: "",
+      gender: "",
+      condition: "",
+      image: "",
+      price: "",
+      duration: "",
+    });
+  }
+};
 
   const handleChange = (e) => {
     setFormData((prev) => ({

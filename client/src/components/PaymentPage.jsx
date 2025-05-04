@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import PaymentMethod from './PaymentMethod';
 import PaymentForm from './PaymentForm';
 import PaymentStatus from './PaymentStatus';
+const API_BASE_URL = process.env.VITE_API_URL;
 
 const PaymentPage = () => {
   const location = useLocation();
@@ -60,7 +61,7 @@ const PaymentPage = () => {
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      const response = await axios.post('http://localhost:1226/api/payments/process', {
+      const response = await axios.post('${API_BASE_URL}api/payments/process', {
         userId: user._id,
         amount: total,
         paymentMethod: paymentData.paymentMethod,

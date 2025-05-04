@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { User, Mail, Phone, Lock } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+const API_BASE_URL = process.env.VITE_API_URL;
 
 const Register = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:1226/api/users/register', formData);
+      const response = await axios.post('${API_BASE_URL}/api/users/register', formData);
       toast.success('Registration successful!');
       navigate('/login');
     } catch (error) {
